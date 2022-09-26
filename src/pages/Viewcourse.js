@@ -1,8 +1,14 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import {ApiService} from '../services/Services'
 import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
 
-function AddCourse() {
+
+function Viewcourse() {
+    const id = useParams();
+    console.log(id.id);
+
+    
     const [form,setForm] = useState({title:'',description:''});
 
     const updateTitle = (e) =>{
@@ -13,6 +19,14 @@ function AddCourse() {
         setForm({...form,description:e.target.value})
 
     }
+
+    useEffect(()=>{
+        ApiService.get('http://localhost:3001/courses/'+id.id).then((res)=>{
+        console.log(res);
+        setForm(res.data);
+        })
+    
+      },[])
 
 
     const save = (e) =>{
@@ -48,7 +62,7 @@ function AddCourse() {
         </div>
         <div className="form-group">
             <label >Description</label>
-            <input type="text" className="form-control" onChange={updateDec} id="description" /> 
+            <input type="text" className="form-control" value={form.description} onChange={updateDec} id="description" /> 
         </div>
         <br></br>
               <button onClick={save}  className="btn btn-primary">Save</button>
@@ -57,5 +71,5 @@ function AddCourse() {
     )
   }
   
-  export default AddCourse
+  export default Viewcourse;
   

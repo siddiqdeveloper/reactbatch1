@@ -1,43 +1,62 @@
+import {ApiService} from '../services/Services'
+import { useState ,useEffect} from "react"
+import { Link } from 'react-router-dom';
 function ListCourse() {
- 
-    return (
+  const [list,setList] = useState([]);
 
-        <>
+  useEffect(()=>{
+    getdata();
+
+  },[])
+
+ const  getdata = () =>{ ApiService.get('http://localhost:3001/courses').then((res)=>{
+    console.log(res);
+    setList(res.data);
+    })}
+
+
+  const deleteItem = (id) =>{
+    ApiService.delete("http://localhost:3001/courses/"+id).then((res)=>{
+      getdata();
+    })
+  }
+
+
+ 
+  return (
+
+      <>
 
 <table class="table">
-  <thead>
+<thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Title</th>
+    <th scope="col">Description</th>
+    <th scope="col">Handle</th>
+  </tr>
+</thead>
+<tbody>
+  {list && list.map((item)=>{
+    return <>
+    
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
-  </tbody>
+    <th scope="row">{item.id}</th>
+    <td>{item.title}</td>
+    <td>{item.description}</td>
+    <td> <Link to={'/view/' + item.id} > View</Link> <span style={{cursor:'pointer'}} onClick={ ()=>{ deleteItem(item.id)}}>Delete</span> </td>
+  </tr>
+    
+    </>
+  })}
+ 
+ 
+</tbody>
 </table>
-        
-        
-        </>
-    )
-  }
-  
-  export default ListCourse
+      
+      
+      </>
+  )
+}
+
+export default ListCourse

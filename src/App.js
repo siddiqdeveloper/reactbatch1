@@ -3,6 +3,7 @@ import AddCourse from "./pages/AddCourse";
 import ListCourse from "./pages/CourseList";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
+import Viewcourse from "./pages/Viewcourse";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
 
     <Route path="/" element={ <Home />} ></Route>
     <Route path="/add-course" element={ <AddCourse />} ></Route>
+    <Route path="/view/:id" element={ <Viewcourse />} ></Route>
     <Route path="/list" element={ <ListCourse />} ></Route>
 
     </Route>
