@@ -1,28 +1,28 @@
 import { Route, Routes } from "react-router-dom";
-import AddCourse from "./pages/AddCourse";
-import ListCourse from "./pages/CourseList";
-import Home from "./pages/Home";
-import Layout from "./pages/Layout";
-import Viewcourse from "./pages/Viewcourse";
+import AddComponent from "./pages/AddComponent";
+import HomeComponent from "./pages/HomeComponent";
+import LayoutComponent from "./pages/LayoutCompoent";
+import ListComponent from "./pages/ListComponent";
+import ViewComponent from "./pages/ViewComponent";
+
 
 
 function App() {
  
 
   return (
-
+    <>
     <Routes>
-      <Route path="/" element={<Layout/>} >
+      <Route element={<LayoutComponent/>}>
+        <Route path='/' element={ <HomeComponent/> }></Route>
+        <Route path='/home' element={ <HomeComponent/> }></Route>
+        <Route path='/list' element={ <ListComponent/> }></Route>
+        <Route path='/add' element={ <AddComponent/> }></Route>
+        <Route path='/view/:id' element={ <ViewComponent/> }></Route>
+      </Route>
+    </Routes>
 
-    <Route path="/" element={ <Home />} ></Route>
-    <Route path="/add-course" element={ <AddCourse />} ></Route>
-    <Route path="/view/:id" element={ <Viewcourse />} ></Route>
-    <Route path="/list" element={ <ListCourse />} ></Route>
-
-    </Route>
-
-  </Routes>
-
+   </>
   )
 }
 
