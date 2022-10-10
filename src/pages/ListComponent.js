@@ -1,4 +1,26 @@
+import axios  from 'axios';
+import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2'
+
+
+const api = axios.create({
+   baseURL:'http://localhost:3001/',
+   headers: {'content-type': 'application/json'}
+})
+
+
 function ListComponent(){
+   const[list,setList] = useState([]);
+
+   useEffect(()=>{
+      api.get('courses').then( (res)=>{
+         console.log(res);
+         setList(res.data);
+      })
+
+
+   },[])
+
    return <>
    
    
@@ -14,8 +36,14 @@ function ListComponent(){
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>John</td>
+
+      { 
+
+list && list.map((item)=>{
+
+   return (<>
+    <tr>
+        <td>{item.title}</td>
         <td>Doe</td>
         <td> 
            <button className="btn btn-warning btn-sm">Delete</button>
@@ -23,6 +51,11 @@ function ListComponent(){
            <button className="btn btn-primary btn-sm">View</button>
          </td>
       </tr>
+     
+      
+      </>)
+})
+      }
      
     </tbody>
   </table>
