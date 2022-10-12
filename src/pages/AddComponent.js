@@ -16,7 +16,7 @@ function AddComponent(){
       console.log(form);
       api.post('courses',form).then( (res)=>{
          console.log(res);
-         setForm({});
+         setForm({title:'',description:''});
          Swal.fire({
             title: 'Example',
             text: 'Swal injected',
@@ -34,7 +34,7 @@ function AddComponent(){
                <form onSubmit={handleSubmit}>
   <div class="form-group">
     <label for="title">Course Name</label>
-    <input  type="text" onKeyDown={ (e)=>{
+    <input value={form.title}  type="text" onChange={ (e)=>{
          setForm({...form,title:e.target.value});
 
     }} class="form-control" id="title" aria-describedby="emailHelp" placeholder="Course Name"/>
@@ -42,7 +42,7 @@ function AddComponent(){
   </div>
   <div class="form-group">
     <label for="courseDesc">Course Description</label>
-    <input    type="text"  onKeyDown={ (e)=>{
+    <input value={form.description}    type="text"  onChange={ (e)=>{
          setForm({...form,description:e.target.value});
 
     }} class="form-control" id="courseDesc" placeholder="Course Description"/>

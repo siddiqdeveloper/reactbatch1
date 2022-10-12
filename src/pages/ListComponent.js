@@ -1,5 +1,6 @@
 import axios  from 'axios';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 
@@ -12,14 +13,29 @@ const api = axios.create({
 function ListComponent(){
    const[list,setList] = useState([]);
 
+
+   const deleteItem = (item) =>{
+      console.log(item);
+
+      api.delete('courses/'+item.id).then( (res)=>{
+         getdata();
+        
+      })
+   }
+
    useEffect(()=>{
+      getdata();
+   },[])
+
+
+   const getdata= () =>{
+
       api.get('courses').then( (res)=>{
          console.log(res);
          setList(res.data);
       })
 
-
-   },[])
+   }
 
    return <>
    
@@ -44,11 +60,17 @@ list && list.map((item)=>{
    return (<>
     <tr>
         <td>{item.title}</td>
-        <td>Doe</td>
+        <td>{item.description}</td>
         <td> 
-           <button className="btn btn-warning btn-sm">Delete</button>
+           <button className="btn btn-warning btn-sm" onClick={()=>{
+            deleteItem(item)
+           }}>Delete</button>
          &nbsp;
-           <button className="btn btn-primary btn-sm">View</button>
+           <button className="btn btn-primary btn-sm" >
+
+           <Link to={'/view/'+item.id} style={{color:'white'}}>View</Link>
+
+           </button>
          </td>
       </tr>
      
